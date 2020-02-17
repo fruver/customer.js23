@@ -2,6 +2,7 @@ import Joi from '@hapi/joi';
 
 const _buildMessages = (field: string, label: string) => ({
   'string.empty': `Es necesario ingresar un valor para el campo ${label}`,
+  // 'string.min': ``,
   'any.required': `${label} es un campo requerido`,
 });
 
@@ -25,6 +26,8 @@ export const CreateUserWithEmailAndPasswordSchema = CreateUserSchema.append({
     .messages(_buildMessages('email', 'Correo electrónico')),
   password: Joi.string()
     .label('Contraseña')
+    .min(8)
+    .alphanum()
     .required()
     .messages(_buildMessages('password', 'Contraseña')),
 });
