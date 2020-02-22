@@ -1,12 +1,27 @@
 import { MongoError, Collection, Db } from 'mongodb';
 
-interface User {
+export interface WhatsApp {
+  code: number;
+  phoneNumber: number;
+  isActive: boolean;
+  createdAt: Date;
+}
+
+export interface EmailAddress {
+  email: string;
+  isActive: boolean;
+  createdAt: Date;
+}
+
+export interface User {
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
+  whatsapp: WhatsApp;
   password: string;
   isActive: boolean;
-  isStaff: boolean;
+  isAdmin: boolean;
   createdAt: Date;
   lastLogin: Date;
 }
@@ -29,11 +44,11 @@ export const createUserWithEmailAndPassword = (userInfo: User) => {
     email,
     password,
     isActive = false,
-    isStaff = false,
+    isAdmin = false,
   } = userInfo;
   return new Promise<boolean>((resolve, reject) => {
     users.insertOne(
-      { firstName, lastName, email, password, isActive, isStaff },
+      { firstName, lastName, email, password, isActive, isAdmin },
       { w: 'majority' },
       (error, result) => {
         if (error) return reject(error);

@@ -6,9 +6,11 @@ declare namespace NodeJS {
     DEBUG: string;
     PORT: string;
     VERSION: string;
-    SECRET_KEY: string;
+    SECRETKEY: string;
     DBURI: string;
     DBNAME: string;
-    SENDGRID_API_KEY: string;
+    SENDGRIDAPIKEY: string;
+    TWILIO_ACCOUNT_SID: string;
+    TWILIO_AUTH_TOKEN: string;
   }
 }

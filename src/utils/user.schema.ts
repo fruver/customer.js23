@@ -6,7 +6,7 @@ const _buildMessages = (field: string, label: string) => ({
   'any.required': `${label} es un campo requerido`,
 });
 
-export const CreateUserSchema = Joi.object().keys({
+export const UserBaseSchema = Joi.object().keys({
   firstName: Joi.string()
     .label('Nombre(s)')
     .required()
@@ -15,19 +15,30 @@ export const CreateUserSchema = Joi.object().keys({
     .label('Apellido(s)')
     .required()
     .messages(_buildMessages('lastName', 'Apellido(s)')),
-});
-
-// CreateUserWithEmailAndPassword
-export const CreateUserWithEmailAndPasswordSchema = CreateUserSchema.append({
   email: Joi.string()
     .label('Correo electrónico')
     .email()
     .required()
     .messages(_buildMessages('email', 'Correo electrónico')),
-  password: Joi.string()
-    .label('Contraseña')
-    .min(8)
-    .alphanum()
-    .required()
-    .messages(_buildMessages('password', 'Contraseña')),
 });
+
+export const MobileNumberSchema = Joi.object().keys({
+  code: Joi.number()
+    .label('Código')
+    .required()
+    .min(3)
+    .max(3)
+    .messages(_buildMessages('code', 'Código')),
+  number: Joi.number()
+    .label('Numero')
+    .required()
+    .min(10)
+    .max(10)
+    .messages(_buildMessages('number', 'Numero')),
+  isWsp: Joi.boolean()
+    .label('WhatsApp')
+    .required()
+    .default(false),
+});
+
+export const UserWithMobilePhoneSchema = UserBaseSchema.concat(MobileNumberSchema);
